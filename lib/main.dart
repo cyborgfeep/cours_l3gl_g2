@@ -1,9 +1,13 @@
+import 'package:camera/camera.dart';
 import 'package:cours_l3gl_g2/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
+late List<CameraDescription> cameras;
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   await Jiffy.setLocale('fr_ca');
   runApp(const MyApp());
 }
