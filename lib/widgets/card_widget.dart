@@ -5,7 +5,10 @@ import 'package:pretty_qr_code/pretty_qr_code.dart';
 class CardWidget extends StatefulWidget {
   final double? height;
   final double? width;
-  const CardWidget({super.key, this.height, this.width});
+  final bool isClickable;
+
+  const CardWidget(
+      {super.key, this.height, this.width, required this.isClickable});
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
@@ -17,11 +20,13 @@ class _CardWidgetState extends State<CardWidget> {
     print(widget.width);
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ScanScreen(),
-            ));
+        if (widget.isClickable) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ScanScreen(),
+              ));
+        }
       },
       child: Center(
         child: Container(
@@ -55,19 +60,21 @@ class _CardWidgetState extends State<CardWidget> {
                   const SizedBox(
                     height: 2,
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.camera_alt,
-                        size: 15,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text("Scanner")
-                    ],
-                  )
+                  widget.isClickable
+                      ? const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.camera_alt,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text("Scanner")
+                          ],
+                        )
+                      : const SizedBox.shrink()
                 ],
               ),
             ),

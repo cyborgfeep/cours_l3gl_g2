@@ -1,5 +1,6 @@
 import 'package:cours_l3gl_g2/models/options.dart';
 import 'package:cours_l3gl_g2/models/transaction.dart';
+import 'package:cours_l3gl_g2/screens/operation_screen.dart';
 import 'package:cours_l3gl_g2/widgets/card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
@@ -15,18 +16,32 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isVisible = true;
   List<Options> optionList = [
     Options(
-        icon: Icons.person, text: "Transfert", color: const Color(0xff4749cd)),
+        id: 0,
+        icon: Icons.person,
+        text: "Transfert",
+        color: const Color(0xff4749cd)),
     Options(
+        id: 1,
         icon: Icons.shopping_cart_outlined,
         text: "Paiements",
         color: Colors.orangeAccent),
     Options(
-        icon: Icons.phone_android_rounded, text: "Crédit", color: Colors.blue),
+        id: 2,
+        icon: Icons.phone_android_rounded,
+        text: "Crédit",
+        color: Colors.blue),
     Options(
+        id: 3,
         icon: Icons.account_balance_outlined,
         text: "Banque",
         color: Colors.red),
-    Options(icon: Icons.card_giftcard, text: "Cadeau", color: Colors.green)
+    Options(
+        id: 4, icon: Icons.card_giftcard, text: "Cadeau", color: Colors.green),
+    Options(
+        id: 5,
+        icon: Icons.directions_bus,
+        text: "Transport",
+        color: Colors.orange)
   ];
 
   @override
@@ -115,7 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 60,
                         ),
                       ),
-                      const CardWidget()
+                      const CardWidget(
+                        isClickable: true,
+                      )
                     ],
                   )),
               Container(
@@ -129,7 +146,44 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     return optionWidget(
                         onTap: () {
-                          print(optionList[index].text!);
+                          switch (index) {
+                            case 0:
+                              // Transfert
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const OperationScreen(
+                                      isTransfer: true,
+                                    ),
+                                  ));
+                              break;
+                            case 1:
+                              // Payments
+                              print("Payments");
+                              break;
+                            case 2:
+                              // Crédit
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const OperationScreen(
+                                      isTransfer: false,
+                                    ),
+                                  ));
+                              break;
+                            case 3:
+                              // Banque
+                              print("Banque");
+                              break;
+                            case 4:
+                              // Cadeau
+                              print("Cadeau");
+                              break;
+                            case 5:
+                              // Transport
+                              print("Transport");
+                              break;
+                          }
                         },
                         color: optionList[index].color!,
                         text: optionList[index].text!,
